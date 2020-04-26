@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BiometricSample</string>
+    <string name="authenticate">生体認証</string>
+    <string name="please_authenticate">認証してください</string>
 </resources>

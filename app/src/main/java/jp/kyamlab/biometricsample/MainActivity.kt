@@ -24,7 +24,9 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        showBiometricPrompt()
+        button_authenticate.setOnClickListener {
+            showBiometricPrompt()
+        }
     }
 
     // デバイスが生体認証をサポートしているか
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                     super.onAuthenticationSucceeded(result)
                     val authenticatedCryptoObject: BiometricPrompt.CryptoObject? =
                         result.cryptoObject
+                    Log.d(TAG, "認証に成功しました")
                 }
 
                 override fun onAuthenticationFailed() {
