@@ -71,11 +71,11 @@ class MainActivity : AppCompatActivity() {
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(
-                        applicationContext,
-                        "Authentication error: $errString", Toast.LENGTH_SHORT
+                    // 指紋認証に連続で失敗してロックされた時にも呼ばれる
+                    Log.e(
+                        TAG,
+                        "エラーが発生しました"
                     )
-                        .show()
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -87,11 +87,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(
-                        applicationContext, "Authentication failed",
-                        Toast.LENGTH_SHORT
+                    Log.e(
+                        TAG,
+                        "認証に失敗しました"
                     )
-                        .show()
                 }
             }
         )
