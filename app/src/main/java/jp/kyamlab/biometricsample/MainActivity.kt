@@ -6,11 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import java.util.concurrent.Executor
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
-
-    private val executor = Executor {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showBiometricPrompt() {
+        val executor = Executors.newSingleThreadExecutor()
+
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric login for my app")
             .setSubtitle("Log in using your biometric credential")
