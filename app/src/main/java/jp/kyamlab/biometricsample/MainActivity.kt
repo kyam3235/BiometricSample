@@ -74,8 +74,9 @@ class MainActivity : AppCompatActivity() {
                     // 指紋認証に連続で失敗してロックされた時にも呼ばれる
                     Log.e(
                         TAG,
-                        "エラーが発生しました"
+                        ERROR_OCCURRED
                     )
+                    textView.text = ERROR_OCCURRED
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -101,5 +102,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         // ログ表示用のタグ
         private const val TAG = "MainActivity"
+        private const val ERROR_OCCURRED = "エラーが発生しました"
     }
 }
