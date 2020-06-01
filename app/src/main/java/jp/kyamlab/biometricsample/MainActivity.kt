@@ -83,7 +83,11 @@ class MainActivity : AppCompatActivity() {
                     super.onAuthenticationSucceeded(result)
                     val authenticatedCryptoObject: BiometricPrompt.CryptoObject? =
                         result.cryptoObject
-                    Log.d(TAG, "認証に成功しました")
+                    Log.d(
+                        TAG,
+                        AUTHENTICATED
+                    )
+                    textView.text = AUTHENTICATED
                 }
 
                 override fun onAuthenticationFailed() {
@@ -103,5 +107,6 @@ class MainActivity : AppCompatActivity() {
         // ログ表示用のタグ
         private const val TAG = "MainActivity"
         private const val ERROR_OCCURRED = "エラーが発生しました"
+        private const val AUTHENTICATED = "認証に成功しました"
     }
 }
