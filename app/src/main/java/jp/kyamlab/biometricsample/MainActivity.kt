@@ -3,13 +3,17 @@ package jp.kyamlab.biometricsample
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         button_authenticate.setOnClickListener {
             showBiometricPrompt()
+        }
+
+        viewModel.authenticateResult.observe(this) {
+            textView.text = it
         }
     }
 
@@ -76,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                         TAG,
                         ERROR_OCCURRED
                     )
-                    textView.text = ERROR_OCCURRED
+                    viewModel.setAuthenticateResult(ERROR_OCCURRED)
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -87,15 +95,16 @@ class MainActivity : AppCompatActivity() {
                         TAG,
                         AUTHENTICATED
                     )
-                    textView.text = AUTHENTICATED
+                    viewModel.setAuthenticateResult(AUTHENTICATED)
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Log.e(
                         TAG,
-                        "認証に失敗しました"
+                        AUTHENTICATE_FAILED
                     )
+                    viewModel.setAuthenticateResult(AUTHENTICATE_FAILED)
                 }
             }
         )
@@ -108,5 +117,6 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         private const val ERROR_OCCURRED = "エラーが発生しました"
         private const val AUTHENTICATED = "認証に成功しました"
+        private const val AUTHENTICATE_FAILED = "認証に失敗しました"
     }
 }
